@@ -13,14 +13,26 @@
   </div>
 </div>
 
+<div class="row form-group">
+  <div class="col-md-12">
+    <input type="text" class="form-control" placeholder="Search" ng-model="playerSearch"> <br/>
+  </div>
+</div>
+
 <div class="scrollable draft-history">
   <table class="table table-condensed table-hover table-striped">
+    <thead>
+      <th><a href='' ng-click="predicate = 'drafted'; reverse = !reverse">Rank</a></th>
+      <th><a href='' ng-click="predicate = 'name'; reverse = !reverse">Name</a></th>
+      <th><a href='' ng-click="predicate = 'position'; reverse = !reverse">Position</a></th>
+      <th><a href='' ng-click="predicate = 'value'; reverse = !reverse">Value</a></th>
+    </thead>
     <tbody>
-      <tr ng-repeat="player in drafted | orderBy:'drafted':true">
+      <tr ng-repeat="player in drafted | orderBy:predicate:reverse | filter:playerSearch">
         <td>{{player.drafted}}</td>
         <td>{{player.name}}</td>
-        <td>{{player.position}}</td>
-        <td>{{draftGrade(player)}}</td>
+        <td>{{player.position+player.tier}}</td>
+        <td>{{auctionValue(player)}}</td>
       </tr>
     </tbody>
   </table>

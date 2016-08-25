@@ -15,7 +15,7 @@ ffControllers.controller('RankingsCtrl', ['$scope', 'Ranking', 'Rankings',
     }
 
     // Initializations
-    $scope.format = 'standard';
+    $scope.format = 'half_ppr';
     $scope.predicate = 'rank';
     $scope.reverse = false;
     $scope.formats = Rankings.formats;

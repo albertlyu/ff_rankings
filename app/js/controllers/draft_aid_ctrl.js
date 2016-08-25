@@ -6,6 +6,7 @@ ffControllers.controller('DraftAidCtrl', ['$rootScope', '$scope', '$routeParams'
 
       $scope.drafted.push(player);
       player.drafted = $scope.drafted.length;
+      player.position = player.position.replace(/[0-9]/g, '');
 
       localStorageService.set('drafted_' + $scope.format, $scope.drafted);
     }
@@ -15,6 +16,7 @@ ffControllers.controller('DraftAidCtrl', ['$rootScope', '$scope', '$routeParams'
 
       var found = _.find($scope.rankings, function(p){ return p.name === player.name; });
       found.drafted = null;
+      found.value = null;
 
       localStorageService.set('drafted_' + $scope.format, $scope.drafted);
     }
@@ -51,6 +53,13 @@ ffControllers.controller('DraftAidCtrl', ['$rootScope', '$scope', '$routeParams'
       return DraftAid.grade(diff);
     }
 
+    $scope.auctionValue = function(player){
+      if (!player.value) {
+        player.value = parseInt(prompt("Please enter auction value for " + player.name + ": ", ""));
+      }
+      return '$' + player.value.toFixed(0);
+    }
+
     $scope.positionFilter = function(position){
       if (position === null) {
         return {drafted: null};
@@ -73,7 +82,7 @@ ffControllers.controller('DraftAidCtrl', ['$rootScope', '$scope', '$routeParams'
     $scope.formats = Rankings.formats;
     $scope.positions = Rankings.positions;
 
-    $scope.format = 'standard';
+    $scope.format = 'half_ppr';
     $scope.loadRankings($scope.format);
     $scope.search = {};
   }]);
